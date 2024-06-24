@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+
+{%block content%}
+
+<head>
+    <style>
+        .all{
+            margin: 30px 350px 90px 350px;
+        }
+
+        .textA{
+            font-size: 18px;
+            font-weight: bold;
+            color: #0c1923;
+        }
+
+        .A {
+
+        }
+
+        .A li{
+            list-style: none;
+        }
+
+        .A ul > li {
+            margin-left: 20px;
+}
+
+    </style>
+</head>
+
+<div class="all">
+    <h3 style="text-align: center">Контакты:</h3>
+    <br>
+    <ul class="A">
+        <li><p><span class="textA">Наш адрес:  </span></p>
+            <ul>
+                <li><p>Ярославская обл., г. Рыбинск, ул. Новая 5</p></li>
+            </ul>
+        </li>
+        <li><p><span class="textA">Наш офис:  </span></p>
+            <ul>
+                <li><p>Ярославская обл., г. Рыбинск, ул. Новая 5</p></li>
+            </ul>
+        </li>
+        <li><p><span class="textA">Телефон:  </span></p>
+            <ul>
+                <li><p>8-999-999-99-99</p></li>
+            </ul>
+        </li>
+        <li><p><span class="textA">E-Mail:  </span></p>
+            <ul>
+                <li><p>пример@mail.com</p></li>
+            </ul>
+        </li>
+        <li><p><span class="textA">Рабочие дни:  </span></p>
+            <ul>
+                <li>Пн — Пт / 9:00 — 18:00</li>
+                <li>Сб / 10:00 — 15:00  </li>
+                <li><p>Вс — Выходной  </p></li>
+            </ul>
+        </li>
+        <li><p><span class="textA">Наши реквизиты:  </span></p>
+            <ul>
+                <li><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                    Donec at dapibus nunc, dictum facilisis odio. Vivamus molestie felis sem,
+                    sit amet efficitur libero consequat vitae.
+                    Cras tristique varius libero. Nam sagittis leo sem, sed pretium mauris vulputate non.
+                    Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
+                    Ut ut lectus at tortor ornare placerat. Pellentesque dignissim orci enim,
+                    vel consectetur ligula sagittis posuere. Aliquam vel lectus ligula.
+                    Maecenas vitae sagittis felis, in ultrices neque.
+                    Nam molestie ultricies felis quis scelerisque. Donec urna mauris, consequat at nibh eget,
+                    cursus interdum arcu. Vivamus ipsum justo, vehicula vel justo sed, blandit ornare erat.</p></li>
+            </ul>
+        </li>
+    </ul>
+</div>
+
+{% endblock %}

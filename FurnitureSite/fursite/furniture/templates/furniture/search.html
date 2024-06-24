@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+
+{%block content%}
+
+<head>
+    <style>
+        .all{
+            margin: 20px 30px 90px 30px;
+        }
+
+        .textA{
+            font-size: 18px;
+            font-weight: bold;
+            color: #0c1923;
+        }
+
+        .A {
+          display: inline-block;
+        }
+
+        .A li{
+            list-style: none;
+        }
+
+        .A li:hover{
+            background:  #DCDCDC;
+        }
+
+        .A li li{
+            width: 430px;
+            list-style: none;
+        }
+
+        .A ul{
+            position: absolute;
+            display: none;
+            padding: 0;
+        }
+
+        .A li:hover > ul{
+            display: block;
+            background:  #DCDCDC;
+        }
+
+    </style>
+</head>
+
+{% if product.all.count == 0 %}
+    <h3 style="text-align: center; margin: 300px 0 300px 0">По вашему запросу ничего не найдено...</h3>
+{% else %}
+    <h3 class="all">Результат по вашему запросу:</h3>
+    {% for item in product %}
+    <ul class="A">
+        <div class="all">
+            <li>
+                <div class="tm-product tm-scrollanim">
+                    <div class="" style="padding: 0 15px 0 15px">
+                        <div class="text-center">
+                            <a href="{{ item.get_absolute_url }}"><h5 class="card-title">{{item.title}}</h5></a>
+                        </div>
+                        {% for item_photo in item.image_set.all|slice:":1" %}
+                            {% if item_photo.photo%}
+                                <a href="{{ item.get_absolute_url }}"><img src="{{ item_photo.photo.url }}" alt="" width="400" height="300"></a>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+                <br>
+                <ul>
+                    <li style="text-align: center; font-size: 21px; font-weight: bold; color: #0c1923;">{{ item.price }} </li>
+                    <br>
+                    <li style="text-align: center"><span class="textA">Цвет корпуса:  </span> {{item.housing_color}}</li>
+                    <li style="text-align: center"><span class="textA">Цвет фасада:  </span> {{item.facade_color}}</li>
+                </ul>
+            </li>
+        </div>
+    </ul>
+    {%endfor%}
+
+    {% include 'include/paginator.html' %}
+
+{% endif %}
+{%endblock%}

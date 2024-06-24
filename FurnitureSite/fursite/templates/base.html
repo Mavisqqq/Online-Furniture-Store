@@ -1,0 +1,238 @@
+{% load static %}
+
+<head>
+    <title>Сафонов И Сынъ</title>
+    <link rel="apple-touch-icon" href="{% static 'images/xUI9sNsR1g1NQBo13kJmqXDqUerJp4cMd-x6KQaNhq6SxZRLfwRjOKsXhmB2NiUm6KQ7xu5VO7IUkT7yPzM4zOhb.jpg' %}">
+    <link rel="shortcut icon" href="{% static 'images/xUI9sNsR1g1NQBo13kJmqXDqUerJp4cMd-x6KQaNhq6SxZRLfwRjOKsXhmB2NiUm6KQ7xu5VO7IUkT7yPzM4zOhb.jpg' %}">
+
+    <!-- CSS FILES HERE -->
+    <!-- inject:css -->
+    <link rel="stylesheet" href="{% static 'css/vendors/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/vendors/meanmenu.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/vendors/slick.css' %}">
+    <link rel="stylesheet" href="{% static 'css/vendors/slick-theme.css' %}">
+    <link rel="stylesheet" href="{% static 'css/vendors/ionicons.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/vendors/nice-select.css' %}">
+    <link rel="stylesheet" href="{% static 'css/vendors/jquery.fancybox.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/vendors/jquery.nstSlider.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <!-- endinject -->
+</head>
+
+<body>
+
+    <!-- Wrapper -->
+    <div id="wrapper" class="wrapper">
+
+        <!-- Header -->
+        <div class="tm-header tm-header-sticky">
+
+            <!-- Header Top Area -->
+            <div class="tm-header-toparea bg-black">
+                <div class="container">
+                    <div class="row align-items-center">
+                        <div class="col-lg-8 col-12">
+                            <ul class="tm-header-info">
+                                <li><a href="#"><i class="ion-ios-telephone"></i>8-999-999-99-99</a></li>
+                                <li><a href="#"><i
+                                            class="ion-android-mail"></i>contact@example.com</a></li>
+                            </ul>
+                        </div>
+                        <div class="col-lg-4 col-12">
+                            <div class="tm-header-options">
+                                <div class="tm-dropdown tm-header-links">
+                                    <button>Мой аккаунт</button>
+                                    <ul>
+                                        {%if request.user.is_authenticated%}
+                                            <div style="font-weight: bold">{{user.username}}</div>
+                                        {%else%}
+                                            <a href="{% url 'login' %}">Вход</a> | <a href="{% url 'register' %}">Регистрация</a>
+                                        {%endif%}
+                                            <li><a href="{% url 'cart' %}">Корзина</a></li>
+                                            <li><a href="{% url 'favorites' %}">Избранное</a></li>
+                                        {%if request.user.is_authenticated%}
+                                            <li><a href="{%url 'logout'%}">Выход</a></li>
+                                        {%endif%}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--// Header Top Area -->
+
+            <!-- Header Middle Area -->
+            <div class="tm-header-middlearea bg-white">
+                <div class="container">
+                    <div class="tm-mobilenav"></div>
+                    <div class="row align-items-center">
+                        <div class="col-lg-3 col-6 order-1 order-lg-1">
+                            <a href="{% url 'Home' %}" class="tm-header-logo">
+                                <img src="{% static 'images/logo_1240х343.png' %}" alt="">
+                            </a>
+                        </div>
+                        <div class="col-lg-6 col-12 order-3 order-lg-2">
+                            <form action="{% url 'search' %}" method="get">
+                                <div class="" style="display: flex">
+                                    <input type="text" name="s" placeholder="Поиск...">
+                                    <button type="submit"><i class="ion-android-search"></i></button>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="col-lg-3 col-6 order-2 order-lg-3">
+                            <ul class="tm-header-icons">
+                                {% if request.user.is_authenticated %}
+                                    <li><a href="{% url 'favorites' %}"><i class="ion-android-favorite-outline"></i><span>{{request.user.favorite.all.count}}</span></a></li>
+                                    <li><a href="{% url 'cart' %}"><i class="ion-bag"></i><span>{{request.user.cart.all.count}}</span></a></li>
+                                {% else %}
+                                    <li><a href="{% url 'favorites' %}"><i class="ion-android-favorite-outline"></i></a></li>
+                                    <li><a href="{% url 'cart' %}"><i class="ion-bag"></i></a></li>
+                                {% endif %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tm-header bg-white">
+                <div class="container">
+                    <nav class="tm-header-nav" style="display: block;">
+                        <ul>
+                            <li>
+                                <a href="{% url 'Home'%}">Главная</a>
+                            </li>
+                            <li>
+                                <a href="{% url 'catalog'%}">Каталог</a>
+                            </li>
+                            <li>
+                                <a href="{% url 'about_us'%}">О нас</a>
+                            </li>
+                            <li>
+                                <a href="{% url 'contacts'%}">Контакты</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        {% include 'include/_nav.html' %}
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{{ messages.tags }}" style="text-align: center; font-size: 16px;">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+        {% block content %}{% endblock %}
+
+            <!-- Footer -->
+        <div class="tm-footer bg-black">
+            <!-- Footer Top Area -->
+            <div class="tm-footer-toparea tm-padding-section">
+                <div class="container">
+                    <div class="widgets widgets-footer row">
+
+                        <!-- Single Widget -->
+                        <div class="col-lg-3 col-md-6 col-12">
+                            <div class="single-widget widget-info">
+                                <a class="widget-info-logo" href="{% url 'Home' %}"><img src="{% static 'images/logo1.png' %}" alt=""></a>
+                                <p style="color: white">Мебель от производителя</p>
+                            </div>
+                        </div>
+                        <!--// Single Widget -->
+
+                        <!-- Single Widget -->
+                        <div class="col-lg-3 col-md-6 col-12" style="margin-left: 50px">
+                            <div class="single-widget widget-quicklinks">
+                                <h6 class="widget-title" style="color: white">Контакты</h6>
+                                <ul>
+                                    <li><span style="color: white">Наш адрес:  </span>
+                                        <ul>
+                                            <li><p><span style="color: gray">Ярославская обл., г. Рыбинск, ул. Новая 5</span></p></li>
+                                        </ul>
+                                    </li>
+                                    <li><span style="color: white">Наш офис:  </span>
+                                        <ul>
+                                            <li><p><span style="color: gray">Ярославская обл., г. Рыбинск, ул. Новая 5</span></p></li>
+                                        </ul>
+                                    </li>
+                                    <li><span style="color: white">Телефон:  </span>
+                                        <ul>
+                                            <li><p><span style="color: gray">8-999-999-99-99</span></p></li>
+                                        </ul>
+                                    </li>
+                                    <li><span style="color: white">E-Mail:  </span>
+                                        <ul>
+                                            <li><p><span style="color: gray">пример@mail.com</span></p></li>
+                                        </ul>
+                                    </li>
+                                    <li><span style="color: white">Рабочие дни:  </span>
+                                        <ul>
+                                            <li><span style="color: gray">Пн — Пт / 9:00 — 18:00</span></li>
+                                            <li><span style="color: gray">Сб / 10:00 — 15:00</span></li>
+                                            <li><p><span style="color: gray">Вс — Выходной</span></p></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <!--// Single Widget -->
+
+                        <!-- Single Widget -->
+                        <div class="col-lg-3 col-md-6 col-12">
+                            <div class="single-widget widget-quicklinks">
+                                <h6 class="widget-title" style="color: white">Ссылки</h6>
+                                <ul>
+                                    <li><a href="{% url 'Home' %}" style="color: white">Главная</a></li>
+                                    <li><a href="{% url 'catalog' %}" style="color: white">Каталог</a></li>
+                                    <li><a href="{% url 'about_us' %}" style="color: white">О нас</a></li>
+                                    <li><a href="{% url 'contacts' %}" style="color: white">Контакты</a></li>
+                                    <li><a href="{% url 'cart' %}" style="color: white">Корзина</a></li>
+                                    <li><a href="{% url 'favorites' %}" style="color: white">Избранное</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <!--// Single Widget -->
+
+                    </div>
+                </div>
+            </div>
+            <!--// Footer Top Area -->
+
+            <!-- Footer Bottom Area -->
+            <div class="tm-footer-bottomarea">
+                <div class="container">
+                    <div class="row align-items-center">
+                        <div class="col-md-7">
+                            <p class="tm-footer-copyright" style="color: white">В© 2023. Designed by <a href="https://vk.com/mavisq" style="color: white">Mavis</a></p>
+                        </div>
+                        <div class="col-md-5">
+                            <div class="tm-footer-payment">
+                                <img src="{% static 'images/payment-methods.png' %}" alt="payment methods">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--// Footer Bottom Area -->
+        </div>
+        <!--// Footer -->
+        <button id="back-top-top"><i class="ion-arrow-up-c"></i></button>
+        </div>
+    </div>
+    <script src="{% static 'js/vendors/modernizr-3.7.1.min.js' %}"></script>
+    <script src="{% static 'js/vendors/jquery-3.3.1.min.js' %}"></script>
+    <script src="{% static 'js/vendors/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'js/vendors/jquery.meanmenu.min.js' %}"></script>
+    <script src="{% static 'js/vendors/slick.min.js' %}"></script>
+    <script src="{% static 'js/vendors/jquery.nice-select.js' %}"></script>
+    <script src="{% static 'js/vendors/jquery.countdown.min.js' %}"></script>
+    <script src="{% static 'js/vendors/jquery.ajaxchimp.min.js' %}"></script>
+    <script src="{% static 'js/vendors/jquery.fancybox.min.js' %}"></script>
+    <script src="{% static 'js/vendors/imagesloaded.pkgd.min.js' %}"></script>
+    <script src="{% static 'js/vendors/isotope.pkgd.min.js' %}"></script>
+    <script src="{% static 'js/vendors/instafeed.min.js' %}"></script>
+    <script src="{% static 'js/vendors/jquery.nstslider.min.js' %}"></script>
+    <script src="{% static 'js/vendors/ScrollMagic.min.js' %}"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+</body>

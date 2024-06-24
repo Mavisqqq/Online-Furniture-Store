@@ -1,0 +1,26 @@
+{%extends 'base.html'%}
+
+{%block title%}
+Регистрация:{{block.super}}
+{%endblock%}
+
+{%block content%}
+<head>
+    <style>
+        .all{
+            margin: 40px 200px 150px 200px;
+        }
+    </style>
+</head>
+
+<div class="all">
+    <h2>Регистрация</h2>
+    <br>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <br>
+        <button type="submit" class="btn btn-primary btn-block">Регистрация</button>
+    </form>
+</div>
+{%endblock%}

@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+
+{%block content%}
+<head>
+    <style>
+        .textA{
+            font-size: 18px;
+            font-weight: bold;
+            color: #0c1923;
+        }
+        .A{
+          display: inline-block;
+            margin: 35px 35px 100px 35px;
+        }
+
+        .tm-button1,
+        a.tm-button1,
+        button.tm-button1 {
+              display: inline-block;
+              background: #312A20;
+              color: #ffffff;
+              line-height: 50px;
+              font-weight: 600;
+              border-radius: 30px;
+              padding: 0 40px;
+              font-size: 16px;
+        }
+
+        .tm-button1:hover,
+        a.tm-button1:hover,
+        button.tm-button1:hover {
+            background: #D14A43;
+        }
+    </style>
+</head>
+
+{% if request.user.is_not_authenticated %}
+    <h3 style="text-align: center; margin: 300px 0 300px 0"> Необходимо авторизоваться </h3>
+{% else %}
+    {% if request.user.favorite.all.count == 0 %}
+        <h3 style="text-align: center; margin: 300px 0 300px 0"> Вы ещё ничего не добавили в "избранное" </h3>
+    {% else %}
+        {% for item in page_obj.object_list %}
+        <ul class="A">
+            <div class="container">
+                <div class="row">
+                    <div style="margin-top: 50px">
+                        <div class="card mb-3">
+                            <div class="card-header text-center">
+                                <a href="{{ item.get_absolute_url }}"><h5 class="card-title" style="padding-top: 10px">{{item.title}}</h5></a>
+                            </div>
+                            <div class="" style="text-align: center;">
+                                {% for item_photo in item.image_set.all|slice:":1" %}
+                                    {% if item_photo.photo%}
+                                        <a href="{{ item.get_absolute_url }}"><img src="{{ item_photo.photo.url }}" alt="" width="350" height="350" style="margin: 30px"></a>
+                                    {% endif %}
+                                {% endfor %}
+                                <br>
+                                <p><span class="textA">{{ item.price }}  </span></p>
+                                <p><span class="textA">Цвет корпуса:  </span> {{item.housing_color}}</p>
+                                <p><span class="textA">Цвет фасада:  </span> {{item.facade_color}}</p>
+
+                                <p><a  href="{% url 'remove_from_favorite_favorite' item.slug %}" class="tm-button1"> Удалить из избранного </a></p>
+
+                                    {% if request.user in item.cart.all %}
+                                        <p><a  href="{% url 'remove_from_cart_favorite' item.slug %}" class="tm-button1"> Удалить из корзины </a></p>
+                                    {% else %}
+                                        <p><a  href="{% url 'add_to_cart_favorite' item.slug %}" class="tm-button1"> Добавить в корзину </a></p>
+                                    {% endif %}
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ul>
+        {% endfor %}
+
+        {% include 'include/paginator.html' %}
+
+    {% endif %}
+{% endif %}
+{%endblock%}

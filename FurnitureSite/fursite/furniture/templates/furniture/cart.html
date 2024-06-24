@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+
+{%block content%}
+<head>
+    <style>
+        .all{
+            margin: 30px 400px 90px 70px;
+        }
+
+        .prices{
+            position: absolute;
+            left: 79%;
+            box-shadow: 0 0 0 1px black, inset 0 0 7px 1px gray;
+            padding: 10px 10px 10px 10px;
+        }
+
+        .textA{
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .tm-button1,
+        a.tm-button1,
+        button.tm-button1 {
+              display: inline-block;
+              background: #312A20;
+              color: #ffffff;
+              line-height: 50px;
+              font-weight: 600;
+              border-radius: 30px;
+              padding: 0 40px;
+              font-size: 16px;
+        }
+
+        .tm-button1:hover,
+        a.tm-button1:hover,
+        button.tm-button1:hover {
+            background: #D14A43;
+        }
+    </style>
+</head>
+
+{% if request.user.cart.all.count == 0 %}
+    <h3 style="text-align: center; margin: 300px 0 300px 0"> Ваша корзина пуста </h3>
+{% else %}
+    <div class="all">
+        <h2>Ваша корзина</h2>
+        <div class="" style="display: flex">
+            <table class="table">
+                <thead style="background: #efefef; border-radius: 30px;">
+                    <tr>
+                        <th>Фото</th>
+                        <th>Продукт</th>
+                        <th>Цена</th>
+                        <th>Удалить</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for item in products_in_cart %}
+                    <tr>
+                        <td>
+                            {% for item_photo in item.image_set.all|slice:":1" %}
+                                {% if item_photo.photo%}
+                                    <a href="{{ item.get_absolute_url }}"><img src="{{ item_photo.photo.url }}" alt="" width="200" height="200"></a>
+                                {% endif %}
+                            {% endfor %}
+                        </td>
+                        <td><a href="{{ item.get_absolute_url }}">{{item.title}}</a></td>
+                        <td>{{ item.price }}</td>
+                        <td><a  href="{% url 'remove_from_cart_cart' item.slug %}"><i class="ion-close"></i></a></td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            <div class="prices">
+                <h3>Итого:</h3>
+                {% for item in products_in_cart %}
+                    <p><span class="textA">{{item.title}}</span> - {{ item.price }}</p>
+                {% endfor %}
+                <hr>
+                <p style="text-align: center"><span class="textA">Всего:</span> {{ total_price }}</p>
+                <p style="text-align: center"><a  href="#" class="tm-button1"> Оформить заказ </a></p>
+            </div>
+        </div>
+    </div>
+{% endif %}
+{%endblock%}

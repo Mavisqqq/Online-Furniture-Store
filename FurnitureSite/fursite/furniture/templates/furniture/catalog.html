@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{%block content%}
+<head>
+    <style>
+        .A {
+          display: inline-block;
+            margin: 30px 30px 90px 30px;
+        }
+
+    </style>
+</head>
+
+{% for item in categories %}
+<ul class="A">
+    <div class="tm-product tm-scrollanim">
+        <div class="" style="padding: 0 15px 0 15px">
+            <div class="text-center">
+                <a href="{{ item.get_absolute_url }}"><h5 class="card-title">{{item.title}}</h5></a>
+            </div>
+            <a href="{{ item.get_absolute_url }}"><img src="{{ item.photo.url }}" alt="" width="400" height="300"></a>
+        </div>
+    </div>
+</ul>
+{%endfor%}
+{%endblock%}
